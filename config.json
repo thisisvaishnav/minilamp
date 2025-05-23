@@ -1,0 +1,11 @@
+{
+    "clusters": [
+      {
+        "name": "minikube",
+        "api": "https://localhost:8443",
+        "authType": "token",
+        "token": "your-token-here"
+      }
+    ]
+  }
+  
