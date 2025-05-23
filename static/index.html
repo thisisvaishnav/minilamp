@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Headlamp-Lite</title>
+</head>
+<body>
+    <h1>Kubernetes Clusters</h1>
+    <ul id="cluster-list"></ul>
+
+    <script>
+        fetch('/config')
+            .then(res => res.json())
+            .then(data => {
+                const list = document.getElementById('cluster-list');
+                data.clusters.forEach(cluster => {
+                    const item = document.createElement('li');
+                    item.innerText = `Name: ${cluster.name}, API: ${cluster.api}, Auth: ${cluster.authType}`;
+                    list.appendChild(item);
+                });
+            });
+    </script>
+</body>
+</html>

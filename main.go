@@ -17,6 +17,7 @@ func main() {
 	handlers.SetConfig(cfg)
 
 	http.HandleFunc("/config", handlers.GetConfigHandler)
+	http.Handle("/", http.FileServer(http.Dir("./static")))
 	fmt.Println("Server running on http://localhost:3000")
 	log.Fatal(http.ListenAndServe(":3000", nil))
 }
