@@ -1,70 +1,112 @@
-# Getting Started with Create React App
+---
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Mini Headlamp 🚦
 
-## Available Scripts
+A lightweight React-based UI to visualize Kubernetes resources from your local cluster (created using `kind`). This is a simple prototype inspired by the Kubernetes Headlamp project.
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+* Connects to a Kubernetes cluster running locally (via `kind`)
+* Displays pods in the `default` namespace with their status
+* Fetches data through `kubectl proxy` to avoid CORS issues
+* Easy to run and customize for Kubernetes resource visualization
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Prerequisites
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+* [Node.js](https://nodejs.org/) (v16 or later recommended)
+* [kubectl](https://kubernetes.io/docs/tasks/tools/) CLI installed and configured
+* [kind](https://kind.sigs.k8s.io/) to create a local Kubernetes cluster
+* Running Kubernetes cluster (created by `kind`)
+* `kubectl proxy` running on your machine
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Setup and Run
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Create a Kubernetes cluster using kind**
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+kind create cluster
+```
 
-### `npm run eject`
+2. **Start the Kubernetes API proxy**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+```bash
+kubectl proxy
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+This will serve the API at `http://localhost:8001`.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+3. **Clone this repository**
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```bash
+git clone <your-repo-url>
+cd mini-headlamp
+```
 
-## Learn More
+4. **Install dependencies**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```bash
+npm install
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+5. **Start the React app**
 
-### Code Splitting
+```bash
+npm start
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+6. **Open your browser**
 
-### Analyzing the Bundle Size
+Visit [http://localhost:3001](http://localhost:3001) to view Mini Headlamp.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+---
 
-### Making a Progressive Web App
+## Important Notes
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+* The React app uses the `"proxy": "http://localhost:8001"` setting in `package.json` to forward API calls to the Kubernetes proxy and avoid CORS issues.
+* Ensure your Kubernetes cluster has pods running (e.g., deploy an nginx pod) to see meaningful data.
+* This is a development prototype; the production build is not yet optimized.
 
-### Advanced Configuration
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Deploy a test pod (optional)
 
-### Deployment
+To deploy an example pod and see it in Mini Headlamp:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+```bash
+kubectl run nginx --image=nginx --restart=Never
+```
 
-### `npm run build` fails to minify
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## Troubleshooting
+
+* If you don’t see pods listed, verify:
+
+  * Your cluster is running (`kubectl get nodes`)
+  * `kubectl proxy` is running on `localhost:8001`
+  * Pods exist in the `default` namespace (`kubectl get pods`)
+  * The React app has restarted after adding `"proxy"` in `package.json`
+
+---
+
+## Future Improvements
+
+* Support more Kubernetes resources (Deployments, Services, ConfigMaps)
+* Add pod logs and metrics viewing
+* Authentication support for remote clusters
+* UI/UX enhancements for a smoother experience
+
+---
+
+## License
+
+MIT License
+
+---
+
