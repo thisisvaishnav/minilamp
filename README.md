@@ -1,6 +1,6 @@
 ---
 
-# Mini Headlamp 🚦
+# Clustory 🚦
 
 A lightweight React-based UI to visualize Kubernetes resources from your local cluster (created using `kind`). This is a simple prototype inspired by the Kubernetes Headlamp project.
 
@@ -45,7 +45,7 @@ This will serve the API at `http://localhost:8001`.
 
 ```bash
 git clone <your-repo-url>
-cd mini-headlamp
+cd Clustory
 ```
 
 4. **Install dependencies**
